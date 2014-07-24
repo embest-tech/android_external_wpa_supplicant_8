@@ -5250,6 +5250,12 @@ char * wpa_supplicant_ctrl_iface_process(struct wpa_supplicant *wpa_s,
 	int ctrl_rsp = 0;
 	int reply_len;
 
+    if (os_strncmp(buf, "IFNAME=", 7) == 0) {
+        char *pos = os_strchr(buf + 7, ' ');
+        if (pos)
+			buf = ++pos;
+    }	
+
 	if (os_strncmp(buf, WPA_CTRL_RSP, os_strlen(WPA_CTRL_RSP)) == 0 ||
 	    os_strncmp(buf, "SET_NETWORK ", 12) == 0 ||
 	    os_strncmp(buf, "WPS_NFC_TAG_READ", 16) == 0 ||
